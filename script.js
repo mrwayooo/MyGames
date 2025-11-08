@@ -1,14 +1,7 @@
-// =============================
-// ตั้งค่า UniverseId ของเกม Roblox
-// =============================
-const universeId = "8766666913"; // แทนด้วยรหัสเกมของคุณ
-const proxyUrl = "https://simplegames.0408-wayox2.workers.dev/"; // แทนด้วย URL Worker ของคุณ
-
+const universeId = "8766666913";
+const proxyUrl = "https://simplegames.0408-wayox2.workers.dev/";
 const gamesDiv = document.getElementById("games");
 
-// =============================
-// ฟังก์ชัน fetch เกมจาก Worker
-// =============================
 async function fetchGames() {
   try {
     const res = await fetch(`${proxyUrl}?universeId=${universeId}`);
@@ -21,12 +14,12 @@ async function fetchGames() {
 
     const game = data.data[0];
 
-    // สร้าง card แสดงข้อมูลเกม
     gamesDiv.innerHTML = `
       <div class="game-card">
         <h2>${game.name}</h2>
         <p>Players: ${game.playing}</p>
-        <img src="${game.thumbnailUrl}" alt="Game Thumbnail">
+        <p>Visits: ${game.visits}</p>
+        <img src="https://t6.rbxcdn.com/${game.id}" alt="Game Thumbnail" width="200">
       </div>
     `;
   } catch (err) {
@@ -35,8 +28,6 @@ async function fetchGames() {
   }
 }
 
-// =============================
 // เรียก fetch ตอนโหลดหน้า และอัพเดตทุก 5 วินาที
-// =============================
 fetchGames();
 setInterval(fetchGames, 5000);
