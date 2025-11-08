@@ -1,5 +1,5 @@
 const universeId = "8766666913";
-const proxyUrl = "https://simplegames.0408-wayox2.workers.dev/";
+const proxyUrl = "https://simplegames.0408-wayox2.workers.dev";
 const gamesDiv = document.getElementById("games");
 
 async function fetchGames() {
@@ -31,3 +31,4 @@ async function fetchGames() {
 // เรียก fetch ตอนโหลดหน้า และอัพเดตทุก 5 วินาที
 fetchGames();
 setInterval(fetchGames, 5000);
+
