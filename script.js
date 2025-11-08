@@ -4,7 +4,7 @@ const gamesDiv = document.getElementById("games");
 
 async function fetchGame() {
   try {
-    const res = await fetch(`${proxyUrl}?universeId=${universeId}`);
+    const res = await fetch(`${proxyUrl}?universeIds=${universeId}`);
     const data = await res.json();
 
     if(data.error){
@@ -32,3 +32,4 @@ async function fetchGame() {
 // เรียก fetch ทุก 5 วินาที
 fetchGame();
 setInterval(fetchGame, 5000);
+
