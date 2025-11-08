@@ -4,10 +4,10 @@ const gamesDiv = document.getElementById("games");
 
 async function fetchGame() {
   try {
-    const res = await fetch(`${proxyUrl}?universeIds=${universeId}`);
+    const res = await fetch(`${proxyUrl}?universeIds=${universeId}`); // ✅ มี s
     const data = await res.json();
 
-    if(data.error){
+    if (data.error) {
       gamesDiv.innerHTML = `<p>Error: ${data.error}</p>`;
       return;
     }
@@ -18,18 +18,18 @@ async function fetchGame() {
     gamesDiv.innerHTML = `
       <div class="game-card">
         <h2>${game.name}</h2>
-        <p>Players: ${game.playing}</p>
-        <p>Visits: ${game.visits}</p>
+        <p><strong>Creator:</strong> ${game.creator.name}</p>
+        <p><strong>Players:</strong> ${game.playing}</p>
+        <p><strong>Visits:</strong> ${game.visits.toLocaleString()}</p>
         <img src="${thumbnailUrl}" alt="Game Thumbnail">
       </div>
     `;
-  } catch(err){
+  } catch (err) {
     console.error(err);
-    gamesDiv.innerHTML = `<p>Error fetching game data.</p>`;
+    gamesDiv.innerHTML = `<p>⚠️ Error fetching game data.</p>`;
   }
 }
 
-// เรียก fetch ทุก 5 วินาที
+// โหลดข้อมูลครั้งแรก + อัปเดตใหม่ทุก 10 วินาที
 fetchGame();
-setInterval(fetchGame, 5000);
-
+setInterval(fetchGame, 10000);
