@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Roblox Game Stats</title>
+</head>
+<body>
+  <h1>My Roblox Game</h1>
+  <div id="game">
+    <p>Name: <span id="name"></span></p>
+    <p>Players: <span id="players"></span></p>
+    <img id="thumbnail" src="" alt="Game Thumbnail" width="200">
+  </div>
+
+  <script>
+    const universeId = "8766666913"; // แทนด้วยรหัส Universe ของคุณ
+
+    async function fetchGame() {
+      const res = await fetch(`https://games.roblox.com/v1/games?universeIds=${universeId}`);
+      const data = await res.json();
+      const game = data.data[0];
+
+      document.getElementById("name").innerText = game.name;
+      document.getElementById("players").innerText = game.playing;
+      document.getElementById("thumbnail").src = game.thumbnailUrl;
+    }
+
+    fetchGame();
+    setInterval(fetchGame, 5000); // อัพเดตทุก 5 วินาที
+  </script>
+</body>
+</html>
