@@ -3,6 +3,7 @@ const gamesContainer = document.getElementById("games");
 
 async function fetchGame() {
   try {
+    // 📌 1) ดึงข้อมูลเกม
     const res = await fetch(`https://games.roblox.com/v1/games?universeIds=${universeId}`);
     const data = await res.json();
     const game = data.data[0];
@@ -12,16 +13,27 @@ async function fetchGame() {
       return;
     }
 
-    // ✅ ใช้ภาพ thumbnail ที่ได้จาก Roblox (ของคุณ)
-    const imageUrl = "https://tr.rbxcdn.com/180DAY-f2e9e930722b81d9339296e5b1060087/420/420/Image/Png/noFilter";
+    // 📌 2) ขอ Thumbnail จาก Roblox API
+    const thumbRes = await fetch(
+      `https://thumbnails.roblox.com/v1/games/icons?universeIds=${universeId}&size=512x512&format=Png&isCircular=false`
+    );
+    const thumbData = await thumbRes.json();
+    const thumbnailUrl = thumbData.data?.[0]?.imageUrl || "";
 
     gamesContainer.innerHTML = `
       <div class="game-card">
         <h3>${game.name}</h3>
         <p>👤 Creator: ${game.creator.name}</p>
-        <img src="${imageUrl}" alt="${game.name}">
+
+        <img 
+          src="${thumbnailUrl}" 
+          alt="${game.name}"
+          onerror="this.src='fallback.png'"
+        >
+
         <p>🕹️ Players: ${game.playing}</p>
         <p>👁️ Visits: ${game.visits.toLocaleString()}</p>
+
         <a class="play-btn" href="https://www.roblox.com/games/${game.rootPlaceId}" target="_blank">
           ▶ Play on Roblox
         </a>
